@@ -14,49 +14,49 @@ import javax.servlet.http.HttpServletResponse;
 import Database.DbConnection;
 import beans.ListProviderr;
 
-public class Gadget extends HttpServlet {
-
+public class ServiceProviderDetail extends HttpServlet {
 	private Connection con;
 	private PreparedStatement ps;
-	
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-try {
-			
-			ps = con.prepareStatement("SELECT * FROM `gadget`");
+
+		try {
+			int id = Integer.parseInt(request.getParameter("id"));
+			ps = con.prepareStatement("SELECT * FROM `provider` WHERE id='"
+					+ id + "'");
 			java.sql.ResultSet rs = ps.executeQuery();
-			ArrayList<ListProviderr> gadgetproviderList = new ArrayList<ListProviderr>();
-			while (rs.next()) {
-				ListProviderr g = new ListProviderr();
-				g.setId(rs.getInt("id"));
-				g.setPin(rs.getInt("pincode"));
-				g.setName(rs.getString("name"));
-				g.setDes(rs.getString("description"));
-				g.setAdd(rs.getString("address"));
-				g.setCity(rs.getString("city"));
-				g.setState(rs.getString("state"));
-				g.setCoun(rs.getString("country"));
-				
-				gadgetproviderList.add(g);
-			}request.setAttribute("gadgetproviderList", gadgetproviderList);
-			request.getRequestDispatcher("GadgetServiceman.jsp").forward(request, response);
-	}
-		catch (Exception e) {
+			ListProviderr providerList = new ListProviderr();
+			if (rs.next()) {
+				providerList.setId(rs.getInt("id"));
+				providerList.setPin(rs.getInt("pincode"));
+				providerList.setName(rs.getString("name"));
+				providerList.setDes(rs.getString("description"));
+				providerList.setAdd(rs.getString("address"));
+				providerList.setCity(rs.getString("city"));
+				providerList.setState(rs.getString("state"));
+				providerList.setCoun(rs.getString("country"));
+
+			}
+			request.setAttribute("provider", providerList);
+			request.getRequestDispatcher("ServiceProviderDetail.jsp").forward(
+					request, response);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	public void init() throws ServletException {
-		try{
+		try {
 			con = DbConnection.getConnection();
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

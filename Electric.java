@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import Database.DbConnection;
 import beans.ListProviderr;
 
-public class Gadget extends HttpServlet {
-
+public class Electric extends HttpServlet {
 	private Connection con;
 	private PreparedStatement ps;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		doPost(request, response);
 	}
 
@@ -29,23 +29,23 @@ public class Gadget extends HttpServlet {
 			throws ServletException, IOException {
 try {
 			
-			ps = con.prepareStatement("SELECT * FROM `gadget`");
+			ps = con.prepareStatement("SELECT * FROM `electric`");
 			java.sql.ResultSet rs = ps.executeQuery();
-			ArrayList<ListProviderr> gadgetproviderList = new ArrayList<ListProviderr>();
+			ArrayList<ListProviderr> electricproviderList = new ArrayList<ListProviderr>();
 			while (rs.next()) {
-				ListProviderr g = new ListProviderr();
-				g.setId(rs.getInt("id"));
-				g.setPin(rs.getInt("pincode"));
-				g.setName(rs.getString("name"));
-				g.setDes(rs.getString("description"));
-				g.setAdd(rs.getString("address"));
-				g.setCity(rs.getString("city"));
-				g.setState(rs.getString("state"));
-				g.setCoun(rs.getString("country"));
+				ListProviderr e = new ListProviderr();
+				e.setId(rs.getInt("id"));
+				e.setPin(rs.getInt("pincode"));
+				e.setName(rs.getString("name"));
+				e.setDes(rs.getString("description"));
+				e.setAdd(rs.getString("address"));
+				e.setCity(rs.getString("city"));
+				e.setState(rs.getString("state"));
+				e.setCoun(rs.getString("country"));
 				
-				gadgetproviderList.add(g);
-			}request.setAttribute("gadgetproviderList", gadgetproviderList);
-			request.getRequestDispatcher("GadgetServiceman.jsp").forward(request, response);
+				electricproviderList.add(e);
+			}request.setAttribute("electricproviderList", electricproviderList);
+			request.getRequestDispatcher("Electric.jsp").forward(request, response);
 	}
 		catch (Exception e) {
 			e.printStackTrace();

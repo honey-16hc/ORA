@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import Database.DbConnection;
 import beans.ListProviderr;
 
-public class Gadget extends HttpServlet {
+public class Furniture extends HttpServlet {
 
 	private Connection con;
 	private PreparedStatement ps;
@@ -22,6 +22,7 @@ public class Gadget extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
+		
 	}
 
 	
@@ -29,23 +30,23 @@ public class Gadget extends HttpServlet {
 			throws ServletException, IOException {
 try {
 			
-			ps = con.prepareStatement("SELECT * FROM `gadget`");
+			ps = con.prepareStatement("SELECT * FROM `furniture`");
 			java.sql.ResultSet rs = ps.executeQuery();
-			ArrayList<ListProviderr> gadgetproviderList = new ArrayList<ListProviderr>();
+			ArrayList<ListProviderr> furnitureproviderList = new ArrayList<ListProviderr>();
 			while (rs.next()) {
-				ListProviderr g = new ListProviderr();
-				g.setId(rs.getInt("id"));
-				g.setPin(rs.getInt("pincode"));
-				g.setName(rs.getString("name"));
-				g.setDes(rs.getString("description"));
-				g.setAdd(rs.getString("address"));
-				g.setCity(rs.getString("city"));
-				g.setState(rs.getString("state"));
-				g.setCoun(rs.getString("country"));
+				ListProviderr f = new ListProviderr();
+				f.setId(rs.getInt("id"));
+				f.setPin(rs.getInt("pincode"));
+				f.setName(rs.getString("name"));
+				f.setDes(rs.getString("description"));
+				f.setAdd(rs.getString("address"));
+				f.setCity(rs.getString("city"));
+				f.setState(rs.getString("state"));
+				f.setCoun(rs.getString("country"));
 				
-				gadgetproviderList.add(g);
-			}request.setAttribute("gadgetproviderList", gadgetproviderList);
-			request.getRequestDispatcher("GadgetServiceman.jsp").forward(request, response);
+				furnitureproviderList.add(f);
+			}request.setAttribute("furnitureproviderList", furnitureproviderList);
+			request.getRequestDispatcher("Furniture.jsp").forward(request, response);
 	}
 		catch (Exception e) {
 			e.printStackTrace();

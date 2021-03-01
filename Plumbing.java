@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import Database.DbConnection;
 import beans.ListProviderr;
 
-public class Gadget extends HttpServlet {
-
+public class Plumbing extends HttpServlet {
 	private Connection con;
 	private PreparedStatement ps;
 	
@@ -24,28 +23,27 @@ public class Gadget extends HttpServlet {
 		doPost(request, response);
 	}
 
-	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 try {
 			
-			ps = con.prepareStatement("SELECT * FROM `gadget`");
+			ps = con.prepareStatement("SELECT * FROM `plumbing`");
 			java.sql.ResultSet rs = ps.executeQuery();
-			ArrayList<ListProviderr> gadgetproviderList = new ArrayList<ListProviderr>();
+			ArrayList<ListProviderr> plumbingproviderList = new ArrayList<ListProviderr>();
 			while (rs.next()) {
-				ListProviderr g = new ListProviderr();
-				g.setId(rs.getInt("id"));
-				g.setPin(rs.getInt("pincode"));
-				g.setName(rs.getString("name"));
-				g.setDes(rs.getString("description"));
-				g.setAdd(rs.getString("address"));
-				g.setCity(rs.getString("city"));
-				g.setState(rs.getString("state"));
-				g.setCoun(rs.getString("country"));
+				ListProviderr p = new ListProviderr();
+				p.setId(rs.getInt("id"));
+				p.setPin(rs.getInt("pincode"));
+				p.setName(rs.getString("name"));
+				p.setDes(rs.getString("description"));
+				p.setAdd(rs.getString("address"));
+				p.setCity(rs.getString("city"));
+				p.setState(rs.getString("state"));
+				p.setCoun(rs.getString("country"));
 				
-				gadgetproviderList.add(g);
-			}request.setAttribute("gadgetproviderList", gadgetproviderList);
-			request.getRequestDispatcher("GadgetServiceman.jsp").forward(request, response);
+				plumbingproviderList.add(p);
+			}request.setAttribute("plumbingproviderList", plumbingproviderList);
+			request.getRequestDispatcher("Plumbing.jsp").forward(request, response);
 	}
 		catch (Exception e) {
 			e.printStackTrace();
